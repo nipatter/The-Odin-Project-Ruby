@@ -2,7 +2,7 @@
 ABOUT
   Caesar's cipher takes a string and encrypts it by
   shifting the letters some distance along the alphabet.
-  i.e. a letter shifting scrable. This is my implementation of it.
+  i.e. a letter shifting scramble. This is my implementation of it.
 
 ALGORITHM
   0. Create a new string to store the encrypted result
