@@ -1,4 +1,5 @@
-=begin About
+=begin 
+ABOUT
 Implement a method called #stock_picker that
 takes an array of stock prices for each day.
 It returns a pair of days:
@@ -7,9 +8,8 @@ It returns a pair of days:
 Day indexing starts from 0.
 Restriction: You need to buy before selling.
   No shorting allowed
-=end
 
-=begin Algorithm
+ALGORITHM
 1. Sort the prices into descending order
 1.5 Loop body
 2. Subset the prices array from [0] to [prices.index(desc[0])]
@@ -21,25 +21,24 @@ Restriction: You need to buy before selling.
     no -> keep looping, now with desc[2] <=> desc[1] 
 =end 
 
-require "pry"
-
 def stock_picker(days)
+  buy_sell_days = Array.new
+
   desc_days = days.sort.reverse
 
-  for i in 0...desc_days.length
-    sub_prices_A = days[0..days.index(desc_days[i])]
-    guess_A = desc_days[i] - sub_prices_A.min
+  desc_days.each_with_index { |val, ind| 
+    sub_prices_A = days[0..ind]
+    guess_A = val - sub_prices_A.min
 
-    sub_prices_B = days[0..days.index(desc_days[i + 1])]
-    guess_B = desc_days[i + 1] - sub_prices_B.min
+    sub_prices_B = days[0..(ind + 1)]
+    guess_B = days[ind + 1] - sub_prices_B.min
 
-    if guess_B < guess_A 
-      buy_sell_days = [days.index(sub_prices_A.min), days.index(desc_days[i])]
+    if guess_B < guess_A
+      buy_sell_days << days.index(sub_prices_A.min)
+      buy_sell_days << days.index(val)
       break
-    else
-      next
     end
-  end
+  }
   buy_sell_days
 end
 
