@@ -1,45 +1,56 @@
 =begin
-Caesar's cipher takes a string and encrypts it by
-shifting the letters some distance along the alphabet.
-i.e. a letter shifting scrable. This is my implementation of it.
+ABOUT
+  Caesar's cipher takes a string and encrypts it by
+  shifting the letters some distance along the alphabet.
+  i.e. a letter shifting scrable. This is my implementation of it.
+
+ALGORITHM
+  0. Create a new string to store the encrypted result
+  1. Convert letters to ascii numbers
+  2. Categorize numbers as capital or lowercase
+  3. To each add the shift amount to ascii num representation
+  4. For capitals subtract 65 and % 26 to deal with wrapping around
+  5. Concatenate the new letter to the end of encrypted string
+  6. For lowercase subtract 97 and % 26 to deal with wrapping
+  7. Concatenate the new letter to the end of encrypted string
+  8. Add back the 65/97 to bring back to ascii num representation
+  9. If neither capital not lowercase, ignore it
+  10. End with newline
 =end
 
-require "pry" # see how much faith I have in myself
-
-# TODO Get string from user to encrypt
-
 def caesars_cipher(str, shift = 1)
-
-  # Convert the string to a list of letters and
-  # Map each letter in the alphabet to a number (.byte -> ASCII encoding)
-  # Convert the listed letters to numbers
+  encrypted_string = String.new
+  
   ascii_nums = str.bytes
-
-  # Parse the string for upper/lowercase letters
-  # Going letter by letter along the string length 
-  for i in 0...ascii_nums.length
-    
-    if ascii_nums[i].between?(65, 90)
-      # handle capital letters
-      # Algorithm: shift the letter:num by an amount, then
-      #   reduce it so that we count from 0 (A = 0), then
-      #   get the remainder dividing my 26 (# letters in alphabet) so
-      #   that we handle wrapping around to the beginning, then
-      #   convert back to ASCII encoding by adding back 65.
-      new_num = (ascii_nums[i] + shift - 65) % 26 + 65
-      print new_num.chr
-      
-    elsif ascii_nums[i].between?(97, 122)
-      # handle lower case letters
-      new_num = (ascii_nums[i] + shift - 97) % 26 + 97
-      print new_num.chr
-
+  ascii_nums.each do |i|
+    case i
+    when 65..90
+      encrypted_string << ((i + shift - 65) % 26 + 65).chr 
+    when 97..122
+      encrypted_string << ((i + shift - 97) % 26 + 97).chr
     else
-      # ignore punctuation and spacing
-      print ascii_nums[i].chr
+      encrypted_string << i.chr
     end
   end
-  print "\n"
+  encrypted_string
 end
 
-caesars_cipher("What a string!", 5)
+puts caesars_cipher("What a shift!", 5)
+
+# def caesars_cipher(str, shift = 1)
+#   encrypted_string = String.new
+  
+#   ascii_nums = str.bytes
+
+#   for i in 0...ascii_nums.length ## refactor this for loop. Use .each method?
+#     case ascii_nums[i]
+#       when 65..90
+#         encrypted_string << ((ascii_nums[i] + shift - 65) % 26 + 65).chr 
+#       when 97..122
+#         encrypted_string << ((ascii_nums[i] + shift - 97) % 26 + 97).chr
+#       else
+#         encrypted_string << ascii_nums[i].chr
+#     end
+#   end
+#   encrypted_string
+# end
