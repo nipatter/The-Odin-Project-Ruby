@@ -36,21 +36,3 @@ def caesars_cipher(str, shift = 1)
 end
 
 puts caesars_cipher("What a shift!", 5)
-
-# def caesars_cipher(str, shift = 1)
-#   encrypted_string = String.new
-  
-#   ascii_nums = str.bytes
-
-#   for i in 0...ascii_nums.length ## refactor this for loop. Use .each method?
-#     case ascii_nums[i]
-#       when 65..90
-#         encrypted_string << ((ascii_nums[i] + shift - 65) % 26 + 65).chr 
-#       when 97..122
-#         encrypted_string << ((ascii_nums[i] + shift - 97) % 26 + 97).chr
-#       else
-#         encrypted_string << ascii_nums[i].chr
-#     end
-#   end
-#   encrypted_string
-# end

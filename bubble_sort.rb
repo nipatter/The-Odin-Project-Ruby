@@ -34,4 +34,4 @@ def bubble_sort(list)
   list
 end
 
-p bubble_sort([4,3,78,2,0,2])
+puts bubble_sort([4,3,78,2,0,2]).inspect
