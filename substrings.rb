@@ -26,13 +26,13 @@ def substrings(sentence, keywords)
   tracker = Hash.new
 
   words = sentence.downcase.split(" ")
-  keywords.each { |key| 
-    words.each { |word|
+  keywords.each do |key| 
+    words.each do |word|
       if word.include? key
         tracker.include?(key) ? tracker[key] += 1 : tracker[key] = 1
       end
-    }
-  }
+    end
+  end
   tracker 
 end
 

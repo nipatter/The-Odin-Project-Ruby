@@ -64,3 +64,6 @@ build-iPhoneSimulator/
 # My own things
 
 *.odt
+*.odt#
+
+.vscode/

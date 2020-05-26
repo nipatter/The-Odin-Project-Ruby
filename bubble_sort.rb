@@ -24,12 +24,12 @@ def bubble_sort(list)
 
   until no_swaps
     no_swaps = true
-    1.upto(list.length - 1) { |i|
+    1.upto(list.length - 1) do |i|
       if list[i - 1] > list[i]
         list.swap!((i - 1), i)
         no_swaps = false
       end
-    }
+    end
   end
   list
 end

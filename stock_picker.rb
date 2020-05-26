@@ -26,7 +26,7 @@ def stock_picker(days)
 
   desc_days = days.sort.reverse
 
-  desc_days.each_with_index { |val, ind| 
+  desc_days.each_with_index do |val, ind| 
     sub_prices_A = days[0..ind]
     guess_A = val - sub_prices_A.min
 
@@ -38,7 +38,7 @@ def stock_picker(days)
       buy_sell_days << days.index(val)
       break
     end
-  }
+  end
   buy_sell_days
 end
 
