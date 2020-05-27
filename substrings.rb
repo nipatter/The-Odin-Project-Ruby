@@ -26,9 +26,9 @@ def substrings(sentence, keywords)
   words = sentence.downcase.split(' ')
   keywords.each do |key|
     words.each do |word|
-      if word.include? key
-        tracker.include?(key) ? tracker[key] += 1 : tracker[key] = 1
-      end
+      next unless word.include? key
+
+      tracker.include?(key) ? tracker[key] += 1 : tracker[key] = 1
     end
   end
   tracker
