@@ -1,11 +1,11 @@
 def leap_years(first_year, last_year)
-  is_leap = []]
+  is_leap = []
 
   all_years = Array(first_year..last_year)
   all_years.each { |i|
-    if (i % 4).zero? and i % 100 != 0 then
+    if (i % 4).zero? && i % 100 != 0
       is_leap << i
-    elsif (i % 400).zero? then
+    elsif (i % 400).zero?
       is_leap << i
     end
   }
