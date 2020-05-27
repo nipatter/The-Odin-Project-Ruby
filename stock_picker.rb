@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # ABOUT
 # Implement a method called #stock_picker that
 # takes an array of stock prices for each day.

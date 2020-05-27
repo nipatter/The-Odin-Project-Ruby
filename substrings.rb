@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # ABOUT
 # Implement a method #substrings that takes:
 #   arg1: a word

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # ABOUT
 # My implementation of the bubble sort algorithm
 
