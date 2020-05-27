@@ -7,9 +7,9 @@
 #   1. ???
 
 #   TO_ARABIC
-#   1. OK: Read each letter
-#   2. OK: Count occurences of each letter
-#   3. OK: Multiply # of occurences by arabic value (XXX = 3 * 10 = 30)
+#   1. [OK] Read each letter
+#   2. [OK] Count occurences of each letter
+#   3. Multiply # of occurences by arabic value (XXX = 3 * 10 = 30)
 #   4. If a lower value symbol is before higher value symbol
 #     4.1 -> subtract low val from high val (IV = 5 - 1 = 4)
 #     4.2 -> RULE: only factor of 5 and 10 allowed
@@ -24,18 +24,16 @@ class Numeral
   SYMBOLS_MAP = { I: 1, V: 5, X: 10, L: 50,
                   C: 100, D: 500, M: 1000 }.freeze
 
-  def self.to_arabic(num)
-    # subtraction_rule(num)
-    arr = char_count(num)
+  def self.to_arabic(rom)
+    arr = char_count(num)   # have a tally of each letter
+
     multiplier(arr).sum
   end
 
   def self.catch_smaller(str)
-    # if symb LHS < symb RHS
-    #   -> RHS - LHS
-    # if symb LHS << symb RHS
-    #   -> Invalid number: subtraction of next nearest symbols only
-    # except! I and X subtraction is allowed, and XC, and CM.....
+    str.each_char do |digit|
+      
+    end
   end
 
   def self.subtraction_rule; end
