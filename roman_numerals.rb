@@ -1,3 +1,5 @@
+# frozen_string_literal: false
+
 # ABOUT
 # Two methods: one to convert roman => arabic numerals
 #              one to convert arabic => roman numerals
@@ -19,26 +21,41 @@
 #   5. Sum up all the numbers at the end
 #   6. Return the Arabic sum number
 
+require 'pry'
+
 # For the different nuermal systems
 class Numeral
   SYMBOLS_MAP = { I: 1, V: 5, X: 10, L: 50,
                   C: 100, D: 500, M: 1000 }.freeze
 
-  def self.to_arabic(rom)
-    arr = char_count(num)   # have a tally of each letter
-
-    multiplier(arr).sum
+  def initialize(roman)
+    @roman = roman
   end
 
-  def self.catch_smaller(str)
-    str.each_char do |digit|
-      
+  def to_arabic
+    # arr = char_count(num) # have a tally of each letter
+    # multiplier(arr).sum
+    catch_smaller(@rom)
+  end
+
+  def letter_to_num(letter)
+    symbol = letter.to_sym
+    SYMBOLS_MAP[symbol]
+  end
+
+  def catch_smaller(str)
+    str.chars.each_index do |ind|
+      #binding.pry
+      if letter_to_num(str[ind]) == letter_to_num(str[ind + 1])
+        puts ind
+      end
     end
   end
 
-  def self.subtraction_rule; end
+  def subtraction_rule
+  end
 
-  def self.char_count(str)
+  def char_count(str)
     sym_counts = {}
     str.each_char do |symb|
       sym_counts.include?(symb) ? sym_counts[symb.to_sym] += 1 : sym_counts[symb.to_sym] = 1
@@ -46,7 +63,7 @@ class Numeral
     sym_counts
   end
 
-  def self.multiplier(hsh)
+  def multiplier(hsh)
     letter_sums = []
     hsh.each_pair do |k, v|
       letter_sums << SYMBOLS_MAP[k] * v
@@ -54,7 +71,7 @@ class Numeral
     letter_sums
   end
 
-
 end
 
-puts Numeral.to_arabic('XXVI')
+rom_num = Numeral.new('XXIV')
+puts rom_num.to_arabic

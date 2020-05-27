@@ -1,5 +1,5 @@
 def leap_years(first_year, last_year)
-  is_leap = []]
+  is_leap = []
 
   all_years = Array(first_year..last_year)
   all_years.each { |i|
