@@ -25,40 +25,17 @@ ALGORITHM
 
 class Numeral
 
-  def initialize(num)
-    @num = num
-  end
-
   SYMBOLS_MAP = {"I" => 1, "V" => 5, "X" => 10, "L" => 50, 
                 "C" => 100, "D" => 500, "M" => 1000}
 
-  def to_arabic
-    subtraction_rule(@num)
-    # c = char_count(@num)
-    # s = multiplier(c)
-    # s.sum
-  end
-            
-  def char_count(str)
-    sym_counter = Hash.new
-    str.each_char do |symb|
-      sym_counter.include?(symb) ? sym_counter[symb] += 1 : sym_counter[symb] = 1
-    end
-    sym_counter
+  def self.to_arabic(num)
+    # subtraction_rule(num)
+    c = char_count(num)
+    s = multiplier(c)
+    s.sum
   end
 
-  def multiplier(hsh)
-    letter_sums = Array.new
-    hsh.each_pair do |k, v|
-      letter_sums << SYMBOLS_MAP[k] * v
-    end
-    letter_sums
-  end
-
-  def subtraction_rule(str)
-    1.upto(str.length - 1) do |i|
-      puts str[i]
-    end
+  def self.catch_smaller(str)
     # if symb LHS < symb RHS
     #   -> RHS - LHS
     # if symb LHS << symb RHS
@@ -66,7 +43,26 @@ class Numeral
     # except! I and X subtraction is allowed, and XC, and CM.....
   end
 
+  def self.subtraction_rule; end
+
+  def self.char_count(str)
+    sym_counts = {}
+    str.each_char do |symb|
+      sym_counts.include?(symb) ? sym_counts[symb] += 1 : sym_counts[symb] = 1
+    end
+    sym_counts
+  end
+
+  def self.multiplier(hsh)
+    letter_sums = []
+    hsh.each_pair do |k, v|
+      letter_sums << SYMBOLS_MAP[k] * v
+    end
+    letter_sums
+  end
+
+  
+
 end
 
-n = Numeral.new("XXVI")
-puts n.to_arabic
+puts Numeral.to_arabic("XXVI")
