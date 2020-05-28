@@ -11,27 +11,24 @@
 #   TO_ARABIC
 #   1. [OK] Read each letter
 #   2. [OK] Count occurences of each letter
-#   3. Multiply # of occurences by arabic value (XXX = 3 * 10 = 30)
-#   4. If a lower value symbol is before higher value symbol
-#     4.1 -> subtract low val from high val (IV = 5 - 1 = 4)
-#     4.2 -> RULE: only factor of 5 and 10 allowed
-#       4.2.1 => 10 - (5 or 1), 100 - (50 or 10)
-#        4.2.2 => x/5 == 2 or x/10 == 10
-#       4.2.3 => ERROR HANDLING: should return error message instead of crashing
-#   5. Sum up all the numbers at the end
-#   6. Return the Arabic sum number
+#   3. [OK] If a lower value symbol is before higher value symbol
+#     3.1 [OK] -> subtract low val from high val (IV = 5 - 1 = 4)
+#     ? 3.2 -> RULE: only factor of 5 and 10 allowed
+#       3.2.1 [OK] => 10 - (5 or 1), 100 - (50 or 10)
+#       3.2.2 [OK] => x/5 == 2 || x/1 = 5 || x/1 == 10
+#       ? 3.2.3 => ERROR HANDLING: should return error message instead of crashing
+#   4. [OK] Sum up all the numbers at the end
+#   5. [OK] Return the Arabic sum number
 
 require 'pry'
 
 # TODO: turn this into a class later
-# TODO: turn this into a bunch of functions later
 SYMBOLS_MAP = { I: 1, V: 5, X: 10, L: 50,
                 C: 100, D: 500, M: 1000 }.freeze
 
 def to_arabic(roman)
   num_parts = split_numeral(roman)
-  valid_num?(num_parts) ? puts 'ok' : 'Invalid syntax given.'
-  #num_parts = subtraction_rule(num_parts)
+  valid_num(num_parts).sum
 end
 
 def split_numeral(roman)
@@ -47,42 +44,34 @@ end
 def valid_num(parts)
   # check that if a lower number before higher
   # that it is 2 or 10x lower (XV, IX, DC, etc)
-  status = false
+  # status = false
   1.upto(parts.length - 1) do |i|
     left = parts[i - 1]
     right = parts[i]
     next unless left < right
 
-    # somewhere here you need to handle merging two
-    # items to subtract into 1
-    # or make them call a method
-    status = order_logic(left, right)
+    parts.subtract_and_comb!(i - 1, i) if valid_order?(left, right)
   end
-  status
+  parts
 end
 
-def order_logic(lef, rht)
-  if rht / lef == 2 || rht / lef == 5 || rht / lef == 10
+def valid_order?(left, right)
+  if right / left == 2 || right / left == 5 || right / left == 10
     # nearest 5 i.e. 10/5 = 2
     # nearest 1 to 5 i.e. 5/1 = 5
     # nearest 1 to 10 i.e. 10/1 = 10
-    subtraction_rule(lef, rht)
+    true
   else
-    false
+    'false'
   end
 end
 
-def subtraction_rule(low_sym, high_sym)
-  # subtract valid lesser left num from right num (IV = 5 - 1 = 4)
-  high_sym - low_sym
+# new method to subtract and combine elements of an Array
+class Array
+  def subtract_and_comb!(left, right)
+    self[right] = self[right] - self[left]
+    delete_at(left)
+  end
 end
 
-
-
-  # fourth function is the multiplier
-
-  # fifth function is the adder
-
-
-
-p to_arabic('XXIX')
+p to_arabic('MD')
