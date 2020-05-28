@@ -23,55 +23,66 @@
 
 require 'pry'
 
-# For the different nuermal systems
-class Numeral
-  SYMBOLS_MAP = { I: 1, V: 5, X: 10, L: 50,
-                  C: 100, D: 500, M: 1000 }.freeze
+# TODO: turn this into a class later
+# TODO: turn this into a bunch of functions later
+SYMBOLS_MAP = { I: 1, V: 5, X: 10, L: 50,
+                C: 100, D: 500, M: 1000 }.freeze
 
-  def initialize(roman)
-    @roman = roman
-  end
-
-  def to_arabic
-    # arr = char_count(num) # have a tally of each letter
-    # multiplier(arr).sum
-    catch_smaller(@rom)
-  end
-
-  def letter_to_num(letter)
-    symbol = letter.to_sym
-    SYMBOLS_MAP[symbol]
-  end
-
-  def catch_smaller(str)
-    str.chars.each_index do |ind|
-      #binding.pry
-      if letter_to_num(str[ind]) == letter_to_num(str[ind + 1])
-        puts ind
-      end
-    end
-  end
-
-  def subtraction_rule
-  end
-
-  def char_count(str)
-    sym_counts = {}
-    str.each_char do |symb|
-      sym_counts.include?(symb) ? sym_counts[symb.to_sym] += 1 : sym_counts[symb.to_sym] = 1
-    end
-    sym_counts
-  end
-
-  def multiplier(hsh)
-    letter_sums = []
-    hsh.each_pair do |k, v|
-      letter_sums << SYMBOLS_MAP[k] * v
-    end
-    letter_sums
-  end
-
+def to_arabic(roman)
+  num_parts = split_numeral(roman)
+  valid_num?(num_parts) ? puts 'ok' : 'Invalid syntax given.'
+  #num_parts = subtraction_rule(num_parts)
 end
 
-rom_num = Numeral.new('XXIV')
-puts rom_num.to_arabic
+def split_numeral(roman)
+  # first function should split the string up
+  arabic_parts = []
+  roman.chars.each_index do |ind|
+    sym = roman[ind].to_sym
+    arabic_parts << SYMBOLS_MAP[sym]
+  end
+  arabic_parts
+end
+
+def valid_num(parts)
+  # check that if a lower number before higher
+  # that it is 2 or 10x lower (XV, IX, DC, etc)
+  status = false
+  1.upto(parts.length - 1) do |i|
+    left = parts[i - 1]
+    right = parts[i]
+    next unless left < right
+
+    # somewhere here you need to handle merging two
+    # items to subtract into 1
+    # or make them call a method
+    status = order_logic(left, right)
+  end
+  status
+end
+
+def order_logic(lef, rht)
+  if rht / lef == 2 || rht / lef == 5 || rht / lef == 10
+    # nearest 5 i.e. 10/5 = 2
+    # nearest 1 to 5 i.e. 5/1 = 5
+    # nearest 1 to 10 i.e. 10/1 = 10
+    subtraction_rule(lef, rht)
+  else
+    false
+  end
+end
+
+def subtraction_rule(low_sym, high_sym)
+  # subtract valid lesser left num from right num (IV = 5 - 1 = 4)
+  high_sym - low_sym
+end
+
+
+
+  # fourth function is the multiplier
+
+  # fifth function is the adder
+
+
+
+p to_arabic('XXIX')
