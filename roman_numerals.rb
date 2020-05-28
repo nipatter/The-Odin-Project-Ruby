@@ -62,7 +62,7 @@ class Numeral
   def places(num_parts)
     sep = []
     num_parts.each_with_index do |dig, pow|
-      sep << dig.to_i * (10**pow)
+      sep << dig.to_i * 10**pow
     end
     sep
   end
@@ -79,11 +79,7 @@ class Numeral
   end
 
   def valid_order?(left, right)
-    if right / left == 2 || right / left == 5 || right / left == 10
-      true
-    else
-      'false'
-    end
+    true if right / left == 2 || right / left == 5 || right / left == 10
   end
 end
 
